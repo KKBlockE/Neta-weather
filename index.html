@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>架空世界天气模拟</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #6ca0dc, #f8f9fa);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .weather-info {
+            margin-top: 20px;
+        }
+        .weather-info p {
+            margin: 5px 0;
+        }
+        .weather-icon {
+            margin: 10px 0;
+        }
+        .weather-icon img {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>架空世界天气</h1>
+        <select id="region">
+            <!-- 数据将动态加载到此 -->
+        </select>
+        <button onclick="showWeather()">查看天气</button>
+        <div class="weather-info" id="weather-info"></div>
+    </div>
+
+    <script>
+        const weatherData = {};
+
+        // 动态加载天气数据
+        fetch("weather-data.txt")
+            .then(response => response.text())
+            .then(data => {
+                const lines = data.split("\n");
+                const select = document.getElementById("region");
+
+                lines.forEach(line => {
+                    if (line.trim()) {
+                        const [id, name, condition, temperature, humidity, wind, rainfall] = line.split(",");
+                        weatherData[id] = { name, condition, temperature, humidity, wind, rainfall };
+
+                        const option = document.createElement("option");
+                        option.value = id;
+                        option.textContent = name;
+                        select.appendChild(option);
+                    }
+                });
+            });
+
+        // 显示天气信息
+        function showWeather() {
+            const region = document.getElementById("region").value;
+            const weatherInfo = document.getElementById("weather-info");
+            const data = weatherData[region];
+
+            if (data) {
+                const iconPath = `icons/${data.condition}.png`;
+
+                weatherInfo.innerHTML = `
+                    <h2>${data.name} 的天气</h2>
+                    <div class="weather-icon">
+                        <img src="${iconPath}" alt="${data.condition}" onerror="this.src='icons/default.png'">
+                    </div>
+                    <p>天气：${data.condition}</p>
+                    <p>温度：${data.temperature}</p>
+                    <p>湿度：${data.humidity}</p>
+                    <p>风速：${data.wind}</p>
+                    <p>降雨量：${data.rainfall} mm</p>
+                `;
+            } else {
+                weatherInfo.innerHTML = `<p>没有找到该地区的天气数据。</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

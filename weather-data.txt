@@ -1,0 +1,8 @@
+Chonhi Valley,澄新谷,晴,28°C~34°C,80%,10 km/h,0 mm  
+Tau,塔乌,雷阵雨,26°C~32°C,85%,15 km/h,12 mm  
+Pangula,潘谷拉,多云,27°C~33°C,82%,12 km/h,2 mm  
+Monaco,莫纳科,晴转多云,23°C~36°C,65%,20 km/h,1 mm  
+Irkook,伊尔库克,晴,18°C~28°C,50%,8 km/h,0 mm  
+Kana of Winds,风之卡娜,小雨,22°C~30°C,75%,12 km/h,15 mm  
+St. Westsea,西海圣,晴,25°C~38°C,40%,15 km/h,0 mm  
+Qingyuto,清羽都,阴转阵雨,15°C~24°C,70%,10 km/h,8 mm  
